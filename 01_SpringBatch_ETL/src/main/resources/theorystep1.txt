@@ -1,0 +1,18 @@
+reader,writer and processor execution flow after debugging
+
+******************************************************************************************************************
+-> This is simple spring batch process which read data from csv and write to database using JPARepository.
+
+-> It has basic set up for steps and job
+
+Note: Chunk(200)
+
+The above chunk size means,
+    1)It will read 200 record first
+    2) then It will process 1 to 200 record
+    3) then it will go to writer to write.
+
+It's not like read one record process one record.
+
+******************************************************************************************************************
+

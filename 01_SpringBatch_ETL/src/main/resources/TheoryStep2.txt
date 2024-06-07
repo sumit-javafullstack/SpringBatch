@@ -1,0 +1,45 @@
+line mapper and line aggregator
+
+*******************************************************************************************************
+Step2:
+    It Reads from database and write to 2 files using 2 writer.
+
+******************************************************************************************************
+CustomerDbReader:
+    This is the best way to read the data from db in spring sql as we can set the pagination
+    while retrieving the data.
+    -> this.jdbcReader.setFetchSize(1000);
+    This tell springs we will fetch 1000 items each time from db .
+    So If we have chunk size 4000, reader will hit the db 4 times to retrieve the data efficiently
+    and each time it will fetch 1000 records which will make it faster.
+
+******************************************************************************************************
+CustomerDatWriter1:
+    This writer is use for writing to .dat file. Since this uses FlatFileItemWriter, the file
+    opening/closing operations becomes more efficient.
+
+CustomerDatWriter2:
+    This writer is use for writing to .dat file with fixed length.
+    examples:
+        %04d -> 4 length of integer value and if integer length is less than 4, it will
+        pad with 0. ( 45 -> 0045)
+        %016.2f -> 16 length of double value , 2 after decimal  and will be padding
+        with 00 ( 568936.6 -> 0000000568936.60)
+
+OutPutFile:
+00450000000568936.60
+******************************************************************************************************
+CompositeWriter:
+    In Spring Batch we can have more than 1 Reader/Writer/Processor and it can be implemented using
+    CompositeItemReader/Writer/processor.
+
+    Refer to compositeWriter() method inside BatchConfiguration.
+    We use CompositeWriter when we have to write moe than 1 output files based on certain conditions.
+
+
+CompositeReader/Processor:
+
+This setup can be useful when you want to combine data
+from two different sources and write it to a single destination.
+
+******************************************************************************************************
