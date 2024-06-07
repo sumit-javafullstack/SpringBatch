@@ -1,0 +1,38 @@
+Listener : goto listener package and CustomerReader to check ItemStream
+
+Listener is special class in spring batch provided with
+    1) Reader (ItemReadListener/ItemStream)
+    2) Writer (ItemWriteListener/ItemStream)
+    3) Processor (ItemProcessListener/ItemStream)
+    4) Steps (StepExecutionListener)
+    5) Job (JobExecutionListener)
+
+to listen to activity.
+
+******************************************************************************************************************
+why we should not use ItemReadListener ,ItemWriteListener ,ItemProcessListener
+-> when we use above listener, the overridden method will get executed at each steps. For example
+let's say if we use ItemReadListener in reader class then
+    1)BeforeRead method will get executed before reading each item, so if we read 1000 items ,
+     the before read item will be called 1000 times.
+    2)It is same with AfterRead overridden method as well, the AfterRead overridden method will
+        be executed 1000 times  as well.
+
+ItemStream:
+
+Instead of using Reader/Writer/Processor listener we prefer to use ItemStream in all the classes as
+open()/update() will get executed only once before read and close will get executed only once after read.
+
+The main advantage of ItemStream is , when we deal with file operation, it can be use for
+ Opening/Closing files after/before steps.
+
+******************************************************************************************************************
+
+StepExecutionListener:
+It is uses to listen to steps details and we bind this implementation class with steps in batch
+configuration.
+
+JobExecutionListener:
+It is uses to listen to job details and we bind this implementation class with job in batch
+configuration.
+****************************************************************************************************************

@@ -1,0 +1,33 @@
+******************************************************************************************************************
+ @BeforeStep:
+
+ we can use the above annotation on a method inside Reader,Writer or Processor as well.
+ If we have requirement where we have to execute something for one time
+ before reader start reading
+ before writer start writing
+ before processor start processor
+
+ NOTE: this method will get executed at only once, It is helpful to when we have to load some file/clearing
+ file before start writing/
+
+ Remarks: The above annotation we generally avoid in Writer/Reader/Processor class as we do have
+           ItemStream implementation class to perform same activity.
+
+ We prefer to use @BeforeStep in the classes like StepListener/SkipListener where
+ ItemStream can't be used.
+
+ For example: we have to delete the previous errorFile generate from skipListener class.
+ Here, we will annotate with @BeforeStep to delete the previous file as ItemStream won't work.
+
+****************************************************************************************************************
+
+
+
+
+
+****************************************************************************************************************
+
+
+
+
+****************************************************************************************************************
