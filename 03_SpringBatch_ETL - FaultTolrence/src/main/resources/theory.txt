@@ -1,0 +1,51 @@
+Fault Tolerance:  ( faulttolrence pkg)
+
+In Spring Batch we reads and writes million of records and we should abort the process if we encounter
+any exception from some of the input file record.
+
+For example, let's say we have age as value sctsyg in one of the row and It will throw the
+NumberFormatException while processing this record and we should skip this record and keep continue
+processing all the remaining record.
+
+This process is called Fault Tolerance.
+
+Also, We can pin point in which class, which record has exceptions.
+
+
+******************************************************************************************************************
+
+        faultTolerant()
+        .skipPolicy(exceptionSkipPolicy)
+        // .skip(Exception.class)
+        .skipLimit(10)
+        .listener(customSkipListener)
+        .listener(loadDbStepListener)
+
+CustomSkipListener :
+-> This listener will be called after every skip.
+   It has readSkip, writeSkip, processSkip methods and will call respective skip method based on the
+   class skip will occur.
+-> This also helps us to point out exact error and line number as well.
+
+******************************************************************************************************************
+.skipPolicy(exceptionSkipPolicy)
+->  Created ExceptionSkipPolicy class to skip some of the particular exceptions not for all exception.
+    We are skipping for FlatFileParseException, NumberFormatException, NullPointerException exception only
+    and if batch process encounter any other error out of above three, the batch process will get failed.
+    or terminated.
+
+// .skip(Exception.class)
+    It will skip for all type of exceptions occur in the batch process.
+
+// .skipLimit(10) is optinal , if we don't mention any limit the faultTolerant will be applied for
+    all exceptions.
+
+
+******************************************************************************************************************
+At the end , since we already used StepExecutionListener,
+we will get count(both skipped and not-skipped) details for reader,writer,and processor and over all count.
+from StepExecutionListener logs.
+****************************************************************************************************************
+In the resource folder, we have purposefully corrupt the 1st and 2nd rows of customer.csv.
+
+****************************************************************************************************************

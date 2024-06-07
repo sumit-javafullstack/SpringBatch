@@ -1,0 +1,30 @@
+******************************************************************************************************************
+ new AlwaysSkipItemSkipPolicy():
+  .skipPolicy(new AlwaysSkipItemSkipPolicy())
+  .listener(customSkipListener)
+-> this is another way of mentioning SkipPolicy. No need to mentioned any exception type.
+
+******************************************************************************************************************
+ErrorFile:
+
+In the skip listener , we will create a error file which will contain details of skipped items.
+This file will help us to trace the data issue.
+
+******************************************************************************************************************
+Deleting If File exits:
+
+Ideally in spring batch, The files gets append which means even if one batch runs 5 times,
+the output file/ error file will be appended 5 times as well, Ideally before processing of
+each batch, It should check existence of file and should delete if exists.
+
+******************************************************************************************************************
+Reason to use @BeforeStep in CustomSkipListener:
+
+The reason we should be avoiding ItemStream listener to CustomSkipListener is open will not get call
+as whenever there will be skip, it will call corresponding skip methods. SO either we have to use
+@BeforeStep in the SkipListener class to delete the files or best approach is to delete all the
+required file in the StepListener where we are implementing @BeforeStep
+
+
+******************************************************************************************************************
+
