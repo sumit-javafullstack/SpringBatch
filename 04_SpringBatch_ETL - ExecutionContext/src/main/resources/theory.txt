@@ -1,0 +1,28 @@
+In Spring Batch, the ExecutionContext is a key component used to store and manage stateful
+information across different steps and jobs. It allows data to be shared and persisted
+between steps or even between multiple job executions. The ExecutionContext is particularly
+useful for scenarios where you need to maintain state or track progress across a job's execution.
+
+***********************************************************************************************************
+Create 2 steps:
+1) LOAD-TO-DB-STEP1 -> read from csv and load to db
+2) LOAD-TO-CSV-STEP2 -> read from db and load to csv
+
+Step 1 ( LOAD-TO-DB-STEP1 ) has been explained in 01,02,03 .
+***********************************************************************************************************
+Step 2:(LOAD-TO-CSV-STEP2):
+
+We have used JdbcCursorItemReader to read the data from db efficiently.
+Here we used .fetchsize() which uses paging concept while retrieving the data.
+
+***********************************************************************************************************
+In both the steps, we are listening from same StepExecutionListner to log the details.
+
+***********************************************************************************************************
+
+With the help of ExecutionContext, we can communicate between Step1 and Step2.
+We can shared the data as well.
+
+STep1 Reader updating some value and STep2 reader getting that value.
+
+***********************************************************************************************************
