@@ -1,0 +1,10 @@
+//
+We are creating 10 partitions and each partitions will have 500 records.
+
+We are executing 5  parallel thread so each thread will have 2 partitions.
+
+
+//
+
+
+//
